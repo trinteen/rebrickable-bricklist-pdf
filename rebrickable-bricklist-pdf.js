@@ -34,7 +34,7 @@ function rebrickable_get_PDF_save(NAME_FILE, ID){
             printBackground: false,
             format: "A4",
             displayHeaderFooter: true,
-            headerTemplate: '<span style="font-size: 15px; width: 100%; height: 50px; color:black; margin-left: 50px;"> Číslo stavebnice: <strong>' + ID + '</strong></span>',
+            headerTemplate: '<span style="font-size: 15px; width: 100%; height: 50px; color:black; margin-left: 50px;"> LEGO ID SET: <strong>' + ID + '</strong></span>',
             footerTemplate: '<span style="font-size: 15px; width: 100%; margin-right: 50px; text-align: right;"> <span class="pageNumber"></span> / <span class="totalPages"></span></span>'
         });
         await PDFbr.close();
