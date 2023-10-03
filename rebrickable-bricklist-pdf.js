@@ -119,7 +119,10 @@ function rebrickable_get_list(ID){
             if(href.includes("/inventory/") && href.includes("/parts/") && href.includes("?format=table")){
                 lego_table = baseURL + href;
                 lego_profile = "";
-            } else if(href.includes(ID) && href.includes("?inventory=1") && href.includes("/sets/")){
+
+            } else if(  (href.includes("/sets/" + ID + "/") || href.includes("/sets/" + ID + "-1/")) && 
+                        (href.includes("?inventory=1") || href.includes("?inventory=2"))
+                    ){
                 lego_profile = baseURL + href;
                 lego_table = "";
             }
@@ -131,7 +134,7 @@ function rebrickable_get_list(ID){
         } else if(lego_table.length > 0){
             rebrickable_get_PDF(lego_table,ID+".pdf", ID);
         } else {
-            console.log("Kego set: " + ID + " not found!");
+            console.log("Lego set: " + ID + " not found!");
         }
     })();
 }
