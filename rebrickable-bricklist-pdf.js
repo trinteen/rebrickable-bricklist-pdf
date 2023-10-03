@@ -13,17 +13,36 @@ if(fs.existsSync("dowload_manuals") == false){
     });
 }
 
+// NAMECACHE FILE:
+if(!fs.existsSync("namecache")){
+    fs.writeFileSync("namecache", "utf-8", "");
+}
+
 // SET ARGUMENTS:
 if(process.argv.length === 2){
     console.error("Not set NUMBER ID lego set");
     process.exit(1);
 } else {
-    rebrickable_get_list(process.argv[2]);
+    const matches = process.argv[2].match(/\[(.*?)\]/);
+    if(matches){
+        fs.writeFileSync("namecache", matches[1], (err) => {
+            if(err){
+                console.error(err);
+            }
+        })
+    } else {
+        rebrickable_get_list(process.argv[2]);
+    }
 }
 
 // PDF:
-function rebrickable_get_PDF_save(NAME_FILE, ID){
+function rebrickable_get_PDF_save(NAME_FILE, ID, title){
     (async () => {
+        if(title.length > 0){
+            title = title;
+        } else {
+            title = "LEGO SET: ";
+        }
         const PDFbr = await puppeteer.launch({headless: "new"});
         const PDFp = await PDFbr.newPage();
         const cachefile = "file://" + process.cwd() + "/cachefile.html";
@@ -34,7 +53,7 @@ function rebrickable_get_PDF_save(NAME_FILE, ID){
             printBackground: false,
             format: "A4",
             displayHeaderFooter: true,
-            headerTemplate: '<span style="font-size: 15px; width: 100%; height: 50px; color:black; margin-left: 50px;"> LEGO ID SET: <strong>' + ID + '</strong></span>',
+            headerTemplate: '<span style="font-size: 15px; width: 100%; height: 50px; color:black; margin-left: 50px;">&nbsp;' + title + '&nbsp;<strong>&nbsp;' + ID + '&nbsp;</strong></span>',
             footerTemplate: '<span style="font-size: 15px; width: 100%; margin-right: 50px; text-align: right;"> <span class="pageNumber"></span> / <span class="totalPages"></span></span>'
         });
         await PDFbr.close();
@@ -51,6 +70,7 @@ function rebrickable_get_PDF_save(NAME_FILE, ID){
 
 function rebrickable_get_PDF(URL, NAME_FILE, ID){
     (async () => {
+        const tit = fs.readFileSync("namecache", "utf-8");
         const browser = await puppeteer.launch({headless: "new"});
         const page = await browser.newPage();
         await page.goto(URL, { waitUntil: "networkidle0" });
@@ -69,7 +89,7 @@ function rebrickable_get_PDF(URL, NAME_FILE, ID){
             }
             console.log("cachefile.html created.");
         });
-        rebrickable_get_PDF_save("download_manuals/" + NAME_FILE, ID);
+        rebrickable_get_PDF_save("download_manuals/" + NAME_FILE, ID, tit);
     })();
 }
 
