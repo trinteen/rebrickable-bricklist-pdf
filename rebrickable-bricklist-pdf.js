@@ -31,7 +31,7 @@ if(process.argv.length === 2){
             }
         })
     } else {
-        rebrickable_get_list(process.argv[2]);
+        rebrickable_get_list(process.argv[2], 0);
     }
 }
 
@@ -121,11 +121,23 @@ function rebrickable_get_table(URL, ID){
 }
 
 // GET PROFILE URL:
-function rebrickable_get_list(ID){
+function rebrickable_get_list(ID, pages){
+    var pages_x = 0;
+    if(pages == "" || pages == 0){
+        pages_x = 0;
+    } else {
+        pages_x = pages;
+    }
     (async () => {
         const browser = await puppeteer.launch({headless: "new"});
         const page = await browser.newPage();
-        await page.goto(baseURL + "sets/?q=" + ID);
+        
+        if(pages == 0){
+            await page.goto(baseURL + "sets/?q=" + ID);
+        } else {
+            await page.goto(baseURL + "sets/?q=" + ID + "&page=" + pages_x);
+        }
+
         let source = await page.content();
         await browser.close();
 
@@ -154,7 +166,11 @@ function rebrickable_get_list(ID){
         } else if(lego_table.length > 0){
             rebrickable_get_PDF(lego_table,ID+".pdf", ID);
         } else {
-            console.log("Lego set: " + ID + " not found!");
+            if(pages_x > 10){
+                console.log("Lego set: " + ID + " not found!");
+            } else {
+                rebrickable_get_list(ID, (pages_x+1));
+            }
         }
     })();
 }
