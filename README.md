@@ -11,15 +11,22 @@ For more number use for loop script BATCH (windows) or Shell script (Linux).
 
 Windows (BATCH):
 > @echo off
+>
 > for /f "tokens=*" %%a in (numbers.txt) do (
+>
 >   echo %%a
+>
 >   node rebrickable-bricklist-pdf %%a
+>
 > )
 
 in "numbers.txt":
 > [title]
+>
 > lego-number-id
+>
 > lego-number-id
+>
 > lego-number-id
 
 
