@@ -5,6 +5,7 @@ NodeJS script generate PDF file with bricklist from website rebrickable.com
 
 
 title in pdf set: "node rebrickable-bricklist-pdf.js [title]"
+
 get lego manual: "node rebrickable-bricklist-pdf.js <--LEGO SET ID-->"
 
 For more number use for loop script BATCH (windows) or Shell script (Linux).
@@ -16,7 +17,7 @@ Windows (BATCH):
 >
 >   echo %%a
 >
->   node rebrickable-bricklist-pdf %%a
+>   node rebrickable-bricklist-pdf "%%a"
 >
 > )
 

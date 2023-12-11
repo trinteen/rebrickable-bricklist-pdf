@@ -35,6 +35,16 @@ if(process.argv.length === 2){
     }
 }
 
+// CREATE DIR:
+function rebrickable_get_PDF_save_dir(title){
+    if(fs.existsSync("dowload_manuals/" + title) == false){
+        fs.mkdirSync("download_manuals/" + title, {
+            recursive: true
+        });
+    }
+    return title;
+}
+
 // PDF:
 function rebrickable_get_PDF_save(NAME_FILE, ID, title){
     (async () => {
@@ -89,7 +99,8 @@ function rebrickable_get_PDF(URL, NAME_FILE, ID){
             }
             console.log("cachefile.html created.");
         });
-        rebrickable_get_PDF_save("download_manuals/" + NAME_FILE, ID, tit);
+        var SUBDIR = rebrickable_get_PDF_save_dir(tit)
+        rebrickable_get_PDF_save("download_manuals/" + SUBDIR + "/" + NAME_FILE, ID, tit);
     })();
 }
 
