@@ -13,6 +13,8 @@ For more number use for loop script BATCH (windows) or Shell script (Linux).
 Windows (BATCH):
 > @echo off
 >
+> chcp 65001
+>
 > for /f "tokens=*" %%a in (numbers.txt) do (
 >
 >   echo %%a

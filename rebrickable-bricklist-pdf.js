@@ -1,7 +1,7 @@
 // MODULES:
 const puppeteer = require("puppeteer");
 const HTMLparser = require("node-html-parser");
-const fs = require('fs');
+const fs = require("fs");
 
 // WEBSITE URL:
 var baseURL = "https://rebrickable.com/";
