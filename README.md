@@ -1,6 +1,6 @@
 # rebrickable-bricklist-pdf
 
-NodeJS script generate PDF file with bricklist from website rebrickable.com with new API v3 (https://rebrickable.com/api/v3/docs/)
+NodeJS script generate PDF file with bricklist from website rebrickable.com with log-in user
 
 
 
@@ -35,3 +35,4 @@ in "numbers.txt":
 
 Required modules:
 - puppeteer
+- node-html-parser
