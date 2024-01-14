@@ -35,10 +35,21 @@ if(process.argv.length === 2){
             if(data.hasOwnProperty("detail")){
                 console.log("[" + process.argv[2] + "] not found!");
             } else {
-                console.log("   [" + data.set_num + "] " + data.name + " => " + data.set_url);
-                rebrickable_get_table(data.set_url, process.argv[2]);
+                if(!rebrickable_exist_pdf(process.argv[2])){
+                    console.log("   [" + data.set_num + "] " + data.name + " => " + data.set_url);
+                    rebrickable_get_table(data.set_url, process.argv[2]);
+                }
             }
         });
+    }
+}
+// EXIST OLD PDF:
+function rebrickable_exist_pdf(lego_set_id){
+    const title = fs.readFileSync("namecache", "utf-8");
+    if(fs.existsSync("download_manuals/" + title + "/" + lego_set_id + ".pdf")){
+        return true;
+    } else {
+        return false;
     }
 }
 
