@@ -43,10 +43,11 @@ if(process.argv.length === 2){
         });
     }
 }
+
 // EXIST OLD PDF:
 function rebrickable_exist_pdf(lego_set_id){
     const title = fs.readFileSync("namecache", "utf-8");
-    if(fs.existsSync("download_manuals/" + title + "/" + lego_set_id + ".pdf")){
+    if(fs.existsSync("download_manuals/" + rebrickable_subdir(title) + lego_set_id + ".pdf")){
         return true;
     } else {
         return false;
